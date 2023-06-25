@@ -27,7 +27,14 @@ mkdir build && cd build
 cmake -G Ninja .. -DLLVM_DIR=/path/to/llvm/lib/cmake/llvm -DLLVM_EXTERNAL_LIT=/path/to/lit/lit.py
 ninja
 ```
-If you don't want to install LLVM on your local machine, you can just use docker:
+If you don't want to install LLVM on your local machine, you can just use docker and build on it:
 ```shell
 docker pull ghcr.io/enzymead/enzyme-dev-docker/ubuntu-20-llvm-12:latest
 ```
+### Julia
+Enzyme.jl can be installed in the usual way Julia packages are installed:
+```shell
+] add Enzyme
+```
+### Rust
+The developers of Enzyme provide a repository for Rust. It contains the compiler, standard library, and documentation. And It is modified to use Enzyme for AutoDiff. For details you can look into [Enzyme](https://github.com/EnzymeAD/rust)
