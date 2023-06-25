@@ -7,3 +7,8 @@ Then you can enter the function and do autodiff, like
 
 ![image](https://github.com/mingshuai-li/Enzyme/assets/90833693/863a1604-a1c4-41e8-8066-9d07525aa384)
 
+The develops of Enzyme also provide some examples. To run them, just enter julia in the corresponding path, and enter
+```shell
+include("example.jl")
+```
+For more detailed, please look at [Enzyme.jl](https://enzyme.mit.edu/index.fcgi/julia/stable/#Getting-started)
