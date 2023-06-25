@@ -38,3 +38,6 @@ Enzyme.jl can be installed in the usual way Julia packages are installed:
 ```
 ### Rust
 The developers of Enzyme provide a repository for Rust. It contains the compiler, standard library, and documentation. And It is modified to use Enzyme for AutoDiff. For details you can look into [Enzyme_Rust](https://github.com/EnzymeAD/rust). The installation may take several hours and I just test several examples.
+
+## References
+All the content is based on [Enzyme](enzyme.mit.edu).
