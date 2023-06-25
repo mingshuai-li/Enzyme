@@ -1,3 +1,5 @@
+# Run the Julia scripts
+
 To use Enzyme in Julia, we can just enter the Julia interactive environment, also known as the REPL (Read-Eval-Print Loop) interface, and enter “using Enzyme”.
 You will see this 
 
