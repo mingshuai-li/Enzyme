@@ -8,8 +8,22 @@ All of the examples based on the Enzyme, which is a plugin for LLVM. If you want
 git clone https://github.com/EnzymeAD/Enzyme
 cd Enzyme
 ```
-If you have Homebrew, you can also use
+If you have Homebrew or spack, you can also use
 ```shell
 brew install enzyme
 ```
+```shell
+spack install enzyme
+```
 
+## Installation
+Enzyme supprts multiple languages. We show C, Julia, and Rust here.
+
+### C
+To install Enzyme, you should first build [LLVM](https://llvm.org/docs/GettingStarted.html). Then build Enzyme with follows:
+```shell
+cd /path/to/llvm/source/
+mkdir build && cd build
+cmake -G Ninja ../llvm -DLLVM_TARGETS_TO_BUILD="host" -DLLVM_ENABLE_PROJECTS="clang" -DLLVM_ENABLE_PLUGINS=ON -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=ON
+ninja
+```
