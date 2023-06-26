@@ -9,6 +9,30 @@ __enzyme_autodiff(f, enzyme_dup, inp, d_inp, n, enzyme_dupnoneed, (float*)0, d_o
 }
 ```
 
+Then we can use Enzyme to provide gradients of foreign code in PyTorch and TensorFlow, as follows
+```python
+import torch
+from torch_enzyme import enzyme
+# Create some initial tensor
+inp = ...
+# Apply foreign function to tensor
+out = enzyme("test.c", "f").apply(inp)
+# Derive gradient
+out.backward()
+print(inp.grad)
+```
+
+```python
+import tensorflow as tf
+from tf_enzyme import enzyme
+inp = tf.Variable(...)
+# Use external C code as a regular TF op
+out = enzyme(inp, filename="test.c",
+function="f")
+# Results is a TF tensor
+out = tf.sigmoid(out)
+```
+
 Enzyme also provides custom bindings within JAX. Besides, various frameworks can embed Enzyme with the custom operator capability of AI frameworks. 
 We use MindSpore as an example, and the method is as follows:
 1) Custom forward operator Enzyme by actively invoking clang to generate a shared object (.so) file from the foreign source code path. The generated .so file is then loaded using the dlfcn library to obtain and execute the forward function based on the provided function name.
