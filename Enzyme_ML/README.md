@@ -42,7 +42,7 @@ Use MindSpore as an example, according to [MindSpore_tutorial](https://www.minds
 
 3) Define the backpropagation function (bprop), the logic of which is to call the custom backpropagation operator EnzymeGrad. Define the forward network, which calls the custom Enzyme operator.
 
-4) Finally, Enzyme actively calls the GradOperation function according to the forward network to generate the gradient
+4) Finally, Enzyme actively calls the GradOperation function according to the forward network to generate the gradient
    
 Then can use as follows:
 ```python
