@@ -1,3 +1,4 @@
+# Use Enzyme in ML Frameworks
 For ML Frameworks, Enzyme already offers additional plugins for PyTorch and TensorFlow, enabling users of these ML frameworks to seamlessly import pre-existing C/C++ programs without the need for extensive rewriting. 
 
 First, specify the desired gradient by calling __enzyme_autodiff as shown
@@ -34,7 +35,7 @@ out = tf.sigmoid(out)
 ```
 
 Enzyme also provides custom bindings within JAX. Besides, various frameworks can embed Enzyme with the custom operator capability of AI frameworks. 
-Use MindSpore as an example, according to [MindSpore_tutorial](https://www.mindspore.cn/tutorial/training/en/r1.1/advanced_use/custom_operator_cpu.html) and the method is as follows:
+Use MindSpore as an example, and the method is as follows:
 
 1) Custom forward operator Enzyme by actively invoking clang to generate a shared object (.so) file from the foreign source code path. The generated .so file is then loaded using the dlfcn library to obtain and execute the forward function based on the provided function name.
 
@@ -72,3 +73,7 @@ def test_grad net():
   out = grad(inp,"test .c", "f")
   print(out)
 ```
+# References
+[TensorFlow Contributors](https://www.tensorflow.org/guide/create_op)
+[Torch Contributors](https://pytorch.org/tutorials/advanced/torch_script_custom_ops.html)
+[MindSpore_Contributors, especially its architect Xuefeng jin](https://www.mindspore.cn/tutorial/training/en/r1.1/advanced_use/custom_operator_cpu.html)
