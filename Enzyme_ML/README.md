@@ -1,4 +1,4 @@
-For ML Frameworks, Enzyme already offers additional plugins for PyTorch and TensorFlow, enabling users of these ML frameworks to seamlessly import pre-existing C/C++ programs without the need for extensive rewriting. 
+For ML Frameworks, Enzyme already offers additional plugins for PyTorch and TensorFlow, enabling users of these ML frameworks to seamlessly import pre-existing C/C++ programs without the need for extensive rewriting. 
 
 First, specify the desired gradient by calling __enzyme_autodiff as shown
 ```C
