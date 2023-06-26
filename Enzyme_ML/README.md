@@ -34,7 +34,7 @@ out = tf.sigmoid(out)
 ```
 
 Enzyme also provides custom bindings within JAX. Besides, various frameworks can embed Enzyme with the custom operator capability of AI frameworks. 
-Use MindSpore as an example, and the method is as follows:
+Use MindSpore as an example, according to [MindSpore_tutorial](https://www.mindspore.cn/tutorial/training/en/r1.1/advanced_use/custom_operator_cpu.html) and the method is as follows:
 
 1) Custom forward operator Enzyme by actively invoking clang to generate a shared object (.so) file from the foreign source code path. The generated .so file is then loaded using the dlfcn library to obtain and execute the forward function based on the provided function name.
 
@@ -43,31 +43,32 @@ Use MindSpore as an example, and the method is as follows:
 3) Define the backpropagation function (bprop), the logic of which is to call the custom backpropagation operator EnzymeGrad. Define the forward network, which calls the custom Enzyme operator.
 
 4) Finally, Enzyme actively calls the GradOperation function according to the forward network to generate the gradient
+   
 Then can use as follows:
 ```python
 import mindspore,nn as nn
 import mindspore.ops as ops
+
 class EnzymeNet(nn.Cell):
-def _init_ (self):
-super(EnzymeNet,self)._init_()
-self.enzyme = ops.Enzyme()
-def construct(self, input , filename,
-function):
-return self.enzyme(input , filename ,
-function)
+  def _init_ (self):
+    super(EnzymeNet,self)._init_()
+    self.enzyme = ops.Enzyme()
+    
+  def construct(self, input, filename, function):
+    return self.enzyme(input, filename, function)
+
 class Grad(nn.Cell):
-def _init_(self,network):
-super(Grad,self)._init_()
-self.grad = ops.Gradoperation()
-self.network = network
-def construct(self,input, filename,
-function):
-gout = self.grad(self.network)(input,
-filename, function)
-return gout
+  def _init_(self,network):
+    super(Grad,self)._init_()
+    self.grad = ops.Gradoperation()
+    self.network = network
+def construct(self, input, filename, function):
+  gout = self.grad(self.network)(input, filename, function)
+  return gout
+  
 def test_grad net():
-inp = ...
-grad = Grad(EnzymeNet())
-out = grad(inp,"test .c", "f")
-print(out)
+  inp = ...
+  grad = Grad(EnzymeNet())
+  out = grad(inp,"test .c", "f")
+  print(out)
 ```
