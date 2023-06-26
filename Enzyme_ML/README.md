@@ -78,4 +78,4 @@ def test_grad net():
 
 [Torch Contributors](https://pytorch.org/tutorials/advanced/torch_script_custom_ops.html)
 
-[MindSpore_Contributors, especially its architect Xuefeng jin](https://www.mindspore.cn/tutorial/training/en/r1.1/advanced_use/custom_operator_cpu.html)
+[MindSpore_Contributors, especially its architect Xuefeng Jin](https://www.mindspore.cn/tutorial/training/en/r1.1/advanced_use/custom_operator_cpu.html)
