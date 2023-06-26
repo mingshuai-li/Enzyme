@@ -9,7 +9,7 @@ __enzyme_autodiff(f, enzyme_dup, inp, d_inp, n, enzyme_dupnoneed, (float*)0, d_o
 }
 ```
 
-Then we can use Enzyme to provide gradients of foreign code in PyTorch and TensorFlow, as follows
+Then we can use Enzyme to provide gradients of foreign code in PyTorch
 ```python
 import torch
 from torch_enzyme import enzyme
@@ -21,7 +21,7 @@ out = enzyme("test.c", "f").apply(inp)
 out.backward()
 print(inp.grad)
 ```
-
+In TensorFlow is similar
 ```python
 import tensorflow as tf
 from tf_enzyme import enzyme
@@ -34,7 +34,8 @@ out = tf.sigmoid(out)
 ```
 
 Enzyme also provides custom bindings within JAX. Besides, various frameworks can embed Enzyme with the custom operator capability of AI frameworks. 
-We use MindSpore as an example, and the method is as follows:
+Use MindSpore as an example, and the method is as follows:
+
 1) Custom forward operator Enzyme by actively invoking clang to generate a shared object (.so) file from the foreign source code path. The generated .so file is then loaded using the dlfcn library to obtain and execute the forward function based on the provided function name.
 
 2) Customise the reverse operator EnzymeGrad by actively utilizing Clang and Enzyme to generate a shared object (.so) file from the foreign source code path through AD. The generated .so file is then loaded using the dlfcn library to retrieve and execute the gradient function based on the specified function name.
@@ -42,3 +43,31 @@ We use MindSpore as an example, and the method is as follows:
 3) Define the backpropagation function (bprop), the logic of which is to call the custom backpropagation operator EnzymeGrad. Define the forward network, which calls the custom Enzyme operator.
 
 4) Finally, Enzyme actively calls the GradOperation function according to the forward network to generate the gradient
+Then can use as follows:
+```python
+import mindspore,nn as nn
+import mindspore.ops as ops
+class EnzymeNet(nn.Cell):
+def _init_ (self):
+super(EnzymeNet,self)._init_()
+self.enzyme = ops.Enzyme()
+def construct(self, input , filename,
+function):
+return self.enzyme(input , filename ,
+function)
+class Grad(nn.Cell):
+def _init_(self,network):
+super(Grad,self)._init_()
+self.grad = ops.Gradoperation()
+self.network = network
+def construct(self,input, filename,
+function):
+gout = self.grad(self.network)(input,
+filename, function)
+return gout
+def test_grad net():
+inp = ...
+grad = Grad(EnzymeNet())
+out = grad(inp,"test .c", "f")
+print(out)
+```
